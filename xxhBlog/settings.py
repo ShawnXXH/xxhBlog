@@ -27,6 +27,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = [('127.0.0.1', 'localhost ', '120.79.77.0')]
 
+ADMINS=[('xxh', 'iamxxh@qq.com')]
+
 
 # Application definition
 
