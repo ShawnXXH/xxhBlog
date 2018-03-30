@@ -20,6 +20,7 @@ class Post(models.Model):
     title = models.CharField(max_length=70)
     body = models.TextField()
     created_time = models.DateTimeField()
+    created_date = models.DateField()
     modified_time = models.DateTimeField()
     excerpt = models.CharField(max_length=200, blank=True)
     category = models.ForeignKey(Category)
@@ -37,7 +38,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={'pk': self.pk})
 
-    def save(self):
+    def save(self,**kwargs):
         # 如果没有填写摘要
         if not self.excerpt:
             # 首先实例化一个 Markdown 类，用于渲染 body 的文本
@@ -49,7 +50,7 @@ class Post(models.Model):
             # 从文本摘取前 54 个字符赋给 excerpt
             self.excerpt = strip_tags(md.convert(self.body))[:100]
             # 调用父类的 save 方法将数据保存到数据库中
-        super().save()
+        super().save(**kwargs)
 
     class Meta:
         ordering = ['-created_time']
